@@ -6,7 +6,7 @@ provider "google" {
 
 # Create a GCP Virtual Machine (VM) with CentOS 9
 resource "google_compute_instance" "web_server" {
-  name         = "naruto-web-server"
+  name         = "naruto"
   machine_type = "e2-medium"
   zone = "us-central1-a"
 
@@ -29,7 +29,7 @@ resource "google_compute_instance" "web_server" {
   # Metadata for startup script (this installs a web server and pulls the GitHub repo)
   metadata_startup_script = <<-EOT
     #!/bin/bash
-    sudo dnf update -y
+    //sudo dnf update -y
     sudo dnf install -y httpd git
     sudo systemctl start httpd
     sudo systemctl enable httpd
