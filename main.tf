@@ -7,8 +7,8 @@ provider "google" {
 # Create a GCP Virtual Machine (VM) with CentOS 9
 resource "google_compute_instance" "web_server" {
   name         = "naruto-web-server"
-  machine_type = "f1-micro"
-  zone         = "us-central1-a"
+  machine_type = "e2-medium"
+  zone = "us-central1-a"
 
   # Boot disk image for CentOS 9
   boot_disk {
