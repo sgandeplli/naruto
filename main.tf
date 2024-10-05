@@ -1,19 +1,19 @@
 # Configure the Google Cloud Provider
 provider "google" {
-  project     = "<your-gcp-project-id>"
+  project     = "primal-gear-436812-t0"
   region      = "us-central1"
 }
 
-# Create a GCP Virtual Machine (VM)
+# Create a GCP Virtual Machine (VM) with CentOS 9
 resource "google_compute_instance" "web_server" {
   name         = "naruto-web-server"
   machine_type = "f1-micro"
   zone         = "us-central1-a"
 
-  # Boot disk image for the instance
+  # Boot disk image for CentOS 9
   boot_disk {
     initialize_params {
-      image = "debian-cloud/debian-10"
+      image = "centos-cloud/centos-stream-9"
     }
   }
 
@@ -29,11 +29,13 @@ resource "google_compute_instance" "web_server" {
   # Metadata for startup script (this installs a web server and pulls the GitHub repo)
   metadata_startup_script = <<-EOT
     #!/bin/bash
-    sudo apt-get update
-    sudo apt-get install -y apache2 git
+    sudo dnf update -y
+    sudo dnf install -y httpd git
+    sudo systemctl start httpd
+    sudo systemctl enable httpd
     sudo git clone https://github.com/<your_github_username>/<your_repo_name>.git /var/www/html/
     sudo mv /var/www/html/naruto.html /var/www/html/index.html
-    sudo systemctl restart apache2
+    sudo systemctl restart httpd
   EOT
 
   # Define tags for firewall rules (optional)
