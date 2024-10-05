@@ -33,7 +33,7 @@ resource "google_compute_instance" "web_server" {
     sudo dnf install -y httpd git
     sudo systemctl start httpd
     sudo systemctl enable httpd
-    sudo git clone https://github.com/<your_github_username>/<your_repo_name>.git /var/www/html/
+    sudo git clone https://github.com/sgandeplli/naruto.git /var/www/html/
     sudo mv /var/www/html/naruto.html /var/www/html/index.html
     sudo systemctl restart httpd
   EOT
