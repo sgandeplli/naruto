@@ -1,0 +1,34 @@
+pipeline {
+    agent any
+    
+    environment {
+        GOOGLE_APPLICATION_CREDENTIALS = credentials('gcp-sa')
+    }
+
+    stages {
+        stage('connecting git') {
+            steps {
+                git url : "https://github.com/sgandeplli/naruto.git" , branch : "main"
+            }
+        }
+        
+        stage('initilation') {
+            steps {
+                sh "terraform init"
+            }
+        }
+        stage('terraform planning') {
+            steps {
+                sh "terraform plan"
+            }
+        }
+        stage('Terraform Init & Apply') {
+            steps {
+                withCredentials([file(credentialsId: 'gcp-sa', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
+                    sh 'terraform init'
+                    sh 'terraform apply -auto-approve'
+                }
+            }
+        }
+    }
+}
