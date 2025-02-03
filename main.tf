@@ -1,6 +1,6 @@
 # Configure the Google Cloud Provider
 provider "google" {
-  project     = "primal-gear-436812-t0"
+  project     = "saitejaameda"
   region      = "us-central1"
 }
 
